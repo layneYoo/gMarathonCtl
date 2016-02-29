@@ -1,3 +1,10 @@
-package: xlei/maractl
+package: github.com/gMarathonCtl
 import:
+- package: github.com/Masterminds/glide
+  subpackages:
+  - msg
 - package: github.com/layneYoo/mCtl
+  subpackages:
+  - check
+  - marathon
+- package: github.com/shoenig/config

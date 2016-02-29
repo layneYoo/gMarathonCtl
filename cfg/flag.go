@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Masterminds/glide/msg"
 	"github.com/gMarathonCtl/g"
 	"github.com/layneYoo/mCtl/check"
 )
@@ -31,16 +32,28 @@ func Config() (g.MarathonObj, string) {
 
 	config, err := os.Open(configFile)
 	defer config.Close()
+
+	var marathonObj g.MarathonObj
+
 	if err != nil {
-		fmt.Println("Note : no config file found, using argument")
+		msg.Info("no config file found, using argument: -h ...\n")
+		if host != "" {
+			marathonObj.Marathoninfo.Host = host
+		}
+		if name != "" {
+			marathonObj.Marathoninfo.User = name
+		}
+		if passwd != "" {
+			marathonObj.Marathoninfo.Password = passwd
+		}
+		return marathonObj, format
 	}
+
 	jsonParse := json.NewDecoder(config)
 	check.Check(jsonParse != nil, "json config decode error...")
-	var marathonObj g.MarathonObj
 	if err = jsonParse.Decode(&marathonObj); err != nil {
-		//fmt.Println(err.Error())
+		fmt.Println(err.Error())
 	}
-	//marathonObj.Actioninfo.Act = "atc"
 
 	if host != "" {
 		marathonObj.Marathoninfo.Host = host
@@ -51,6 +64,6 @@ func Config() (g.MarathonObj, string) {
 	if passwd != "" {
 		marathonObj.Marathoninfo.Password = passwd
 	}
-
 	return marathonObj, format
+
 }
