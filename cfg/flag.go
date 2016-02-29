@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gMarathonCtl/g"
 	"github.com/layneYoo/mCtl/check"
-	"xlei/maractl/g"
 )
 
 func parseargs() (config, host, username, password, format string) {

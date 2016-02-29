@@ -8,15 +8,14 @@ import (
 	"fmt"
 	//"os"
 
+	"github.com/gMarathonCtl/cfg"
+	"github.com/gMarathonCtl/g"
+	"github.com/gMarathonCtl/opt"
 	"github.com/layneYoo/mCtl/check"
 	mctl "github.com/layneYoo/mCtl/marathon"
-	"xlei/maractl/cfg"
-	"xlei/maractl/g"
-	"xlei/maractl/opt"
 )
 
 func main() {
-	//host, login, format, e := mctl.Config()
 	e, formatter := cfg.Config()
 
 	//if e != nil {
@@ -134,7 +133,6 @@ func clientAciton(t *mctl.Tool, e g.MarathonObj, args []string) {
 					fmt.Println("image upload : arguments error")
 					return
 				}
-				//fmt.Println(image)
 			} else {
 				fmt.Println("not support : image " + args[1])
 			}
