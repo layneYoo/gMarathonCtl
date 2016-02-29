@@ -1,0 +1,11 @@
+hash: 56e19f8fa8e75ad13cd63ac466ecf905cf7a61b3ace2106668bc3ff6b2ffe9cb
+updated: 2016-02-29T14:19:34.088399218+08:00
+imports:
+- name: github.com/layneYoo/mCtl
+  version: 9c8570b71750124e7a55c5d0164dc1e2dcd741a1
+  subpackages:
+  - check
+  - marathon
+- name: github.com/shoenig/config
+  version: 7d793e7ad7f175ef22743b1ea38acee8267788db
+devImports: []
