@@ -37,24 +37,28 @@ func Config() (g.MarathonObj, string) {
 
 	if err != nil {
 		msg.Info("no config file found, using argument: -h ...\n")
-		if host != "" {
-			marathonObj.Marathoninfo.Host = host
+		/*
+			if host != "" {
+				marathonObj.Marathoninfo.Host = host
+			}
+			if name != "" {
+				marathonObj.Marathoninfo.User = name
+			}
+			if passwd != "" {
+				marathonObj.Marathoninfo.Password = passwd
+			}
+			return marathonObj, format
+		*/
+		goto init
+	} else {
+		jsonParse := json.NewDecoder(config)
+		check.Check(jsonParse != nil, "json config decode error...")
+		if err = jsonParse.Decode(&marathonObj); err != nil {
+			fmt.Println(err.Error())
 		}
-		if name != "" {
-			marathonObj.Marathoninfo.User = name
-		}
-		if passwd != "" {
-			marathonObj.Marathoninfo.Password = passwd
-		}
-		return marathonObj, format
+		goto init
 	}
-
-	jsonParse := json.NewDecoder(config)
-	check.Check(jsonParse != nil, "json config decode error...")
-	if err = jsonParse.Decode(&marathonObj); err != nil {
-		fmt.Println(err.Error())
-	}
-
+init:
 	if host != "" {
 		marathonObj.Marathoninfo.Host = host
 	}
