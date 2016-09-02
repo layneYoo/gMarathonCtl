@@ -6,7 +6,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	//"os"
 
 	"github.com/gMarathonCtl/cfg"
 	"github.com/gMarathonCtl/g"
@@ -78,6 +77,12 @@ func main() {
 			"upload": opt.ImageUpload{},
 		},
 	}
+	mail := &mctl.Category{
+		Actions: map[string]mctl.Action{
+			"online":  opt.SendMail{},
+			"offline": opt.SendMail{},
+		},
+	}
 	t := &mctl.Tool{
 		Selections: map[string]mctl.Selector{
 			"app":      app,
@@ -87,6 +92,7 @@ func main() {
 			"marathon": marathon,
 			"artifact": artifact,
 			"image":    image,
+			"mail":     mail,
 		},
 	}
 
@@ -97,6 +103,8 @@ func main() {
 // client actions
 func clientAciton(t *mctl.Tool, e g.MarathonObj, args []string) {
 	image := e.Baseinfo
+	mail := e.Mailinfo
+	mhn := e.Marathoninfo
 	if len(args) == 0 {
 		check.Usage()
 	}
@@ -107,14 +115,14 @@ func clientAciton(t *mctl.Tool, e g.MarathonObj, args []string) {
 		if act == "image" {
 			if args[1] == "build" {
 				if len(args[2:]) == 4 {
-					image.BuildPath = args[2]
-					image.Registry = args[3]
-					image.Gitlib = args[4]
-					image.DeployJson = args[5]
-					buildImage := []string{args[1], image.BuildPath, image.Registry, image.Gitlib, image.DeployJson}
-					selection.Select(buildImage)
+					//image.BuildPath = args[2]
+					//image.Registry = args[3]
+					//image.Gitlib = args[4]
+					//image.DeployJson = args[5]
+					//buildImage := []string{args[1], image.BuildPath, image.Registry, image.Gitlib, image.DeployJson}
+					//selection.Select(buildImage)
 				} else if len(args[2:]) == 0 {
-					buildImage := []string{args[1], image.BuildPath, image.Registry, image.Gitlib, image.DeployJson}
+					buildImage := []string{args[1], image.BuildPath, image.Registry, image.Gitlib.Host, image.Gitlib.Branch, image.DeployJson, image.DockerPre.Constraints.Offline, image.DockerPre.Constraints.Online, image.DockerPre.Instances.Offline, image.DockerPre.Instances.Online, mhn.Host, mhn.User, mhn.Password}
 					selection.Select(buildImage)
 				} else {
 					fmt.Println("image build : arguments error")
@@ -122,10 +130,10 @@ func clientAciton(t *mctl.Tool, e g.MarathonObj, args []string) {
 				}
 			} else if args[1] == "upload" {
 				if len(args[2:]) == 2 {
-					image.BuildPath = args[2]
-					image.Registry = args[3]
-					uploadImage := []string{args[1], image.BuildPath, image.Registry}
-					selection.Select(uploadImage)
+					//image.BuildPath = args[2]
+					//image.Registry = args[3]
+					//uploadImage := []string{args[1], image.BuildPath, image.Registry}
+					//selection.Select(uploadImage)
 				} else if len(args[2:]) == 0 {
 					uploadImage := []string{args[1], image.BuildPath, image.Registry}
 					selection.Select(uploadImage)
@@ -135,6 +143,13 @@ func clientAciton(t *mctl.Tool, e g.MarathonObj, args []string) {
 				}
 			} else {
 				fmt.Println("not support : image " + args[1])
+			}
+		} else if act == "mail" {
+			if args[1] == "offline" || args[1] == "online" {
+				sendMail := []string{args[1], image.DeployJson, args[1], mail.Server, mail.User, mail.Passwd, mail.Sendto, mhn.Host, mhn.User, mhn.Password}
+				selection.Select(sendMail)
+			} else {
+				fmt.Println("not support : mail " + args[1])
 			}
 		} else {
 			selection.Select(args[1:])

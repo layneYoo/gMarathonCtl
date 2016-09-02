@@ -1,6 +1,14 @@
-hash: 83d8953967576969d97b9e12ab9d5217623a0a3aad50f702607c33ebdd311028
-updated: 2016-02-29T18:41:21.710714278+08:00
+hash: 2710043c7f179415bb04a7a41524de8d67dea9b9f97bd49285cd80b5f5d43ec0
+updated: 2016-08-29T15:25:55.48340964+08:00
 imports:
+- name: github.com/donovanhide/eventsource
+  version: fd1de70867126402be23c306e1ce32828455d85b
+- name: github.com/gambol99/go-marathon
+  version: 63fea16e82279c1d934bcb4602614308b69f22c3
+- name: github.com/google/go-querystring
+  version: 9235644dd9e52eeae6fa48efd539fdc351a0af53
+  subpackages:
+  - query
 - name: github.com/layneYoo/mCtl
   version: 9c8570b71750124e7a55c5d0164dc1e2dcd741a1
   subpackages:
@@ -12,4 +20,4 @@ imports:
   - msg
 - name: github.com/shoenig/config
   version: 7d793e7ad7f175ef22743b1ea38acee8267788db
-devImports: []
+testImports: []

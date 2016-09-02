@@ -8,3 +8,6 @@ import:
   - check
   - marathon
 - package: github.com/shoenig/config
+- package: github.com/gambol99/go-marathon
+  version: v0.1.0
+- package: github.com/donovanhide/eventsource
